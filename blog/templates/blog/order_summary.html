@@ -1,0 +1,89 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<main>
+<div class="container">
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Beat_name</th>
+      
+      
+      <th scope="col">Template</th>
+      <th scope="col">Demo</th>
+      <th scope="col">Beat_price</th>
+      <th scope="col">Remove</th>
+    </tr>
+  </thead>
+  <tbody>   
+    {% for order_post in object.posts.all %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{order_post.post.title}}</td>
+      
+      <td>
+      {% if order_post.post.template %}
+      <span class="badge badge-primary">Availabe </span>
+      {% else %}
+      None
+      {% endif %}
+      </td>
+      <td>
+      {% if order_post.post.demo %}
+      <span class="badge badge-primary">Availabe </span>
+      {% else %}
+      None
+      {% endif %}
+
+      <td>{{order_post.post.price}}</td>
+      </td>
+      <td> <a href="{% url 'remove-single-post-from-cart' order_post.post.pk %}">|remove|</i></a></td>  
+    </tr>
+
+    {% empty %}
+        <tr>
+            <td colspan='5'>Your download list is empty</td>
+        </tr>
+        <tr>
+            <td colspan="5">
+            <a class='btn btn-primary float-right' href='/'>Back to list</a>
+            </td>
+        </tr>
+    {% endfor %}
+
+ {% if object.get_total %}
+        <tr>
+            <td colspan="4"><b>Order Total</b></td>
+            <td><b>{{object.get_total}}</b></td>
+            
+        </tr>
+
+    
+        <tr>
+            <td colspan="5">
+            <a class='btn btn-warning float-right ml-2' href='/checkout/'>Proceed to checkout</a>
+            <a class='btn btn-primary float-right' href='/'>Back to list</a>
+            </td>
+        </tr> {% endif %}
+  </tbody>
+</table>
+</div></main>
+{% endblock content %}    
+   
+  
+  
+      
+     
+                
+      
+      
+     
+      
+      
+      
+      
+      
+     
+
+         

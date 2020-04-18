@@ -1,0 +1,56 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% comment %}
+{% load is_favorited %}
+{% endcomment %}
+
+{% block content %}
+    <!-- News jumbotron -->
+<div class="jumbotron text-center hoverable p-4">
+
+  <!-- Grid row -->
+  <div class="row">
+
+    <!-- Grid column -->
+    <div class="col-md-4 offset-md-1 mx-3 my-3">
+
+      <!-- Featured image -->
+      <div class="view overlay">
+        <img src="{{ song.thumbnail.url }}" class="img-fluid" alt="Sample image for first version of blog listing">
+        <a>
+          <div class="mask rgba-white-slight"></div>
+        </a>
+      </div>
+
+    </div>
+    <!-- Grid column -->
+
+    <!-- Grid column -->
+    <div class="col-md-7 text-md-left ml-3 mt-3">
+
+      <!-- Excerpt -->
+      <a href="#!" class="green-text">
+        <h6 class="h6 pb-1"><i class="fas fa-desktop pr-1"></i> {{ song.title }}</h6>
+      </a>
+
+      <h4 class="h4 mb-4">{{ song.artists.name }}</h4>
+      <p class="font-weight-normal"> <audio controls preload='none'  oncontextmenu="return false;" ><source src="{{ song.song.url }}" type="audio/mpeg"></audio>  </p>
+      <p class="font-weight-normal"> <a><strong>Uploaded: </strong></a>{{song.created_at}}</p>
+
+      
+
+    </div>
+    <!-- Grid column -->
+<a href="{{ song.song.url }}" class="btn btn-success"> Download </a>
+  </div>
+  <!-- Grid row -->
+ <a href="{% url 'freelist' %}">        <h6 class="h6 pb-1"><i class="fas fa-angle-double-left"></i> Back To List</h6></a>
+
+</div>
+<!-- News jumbotron -->
+   
+
+{% endblock %}
+
+
+

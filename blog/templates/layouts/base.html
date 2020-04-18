@@ -1,0 +1,179 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static "blog/css/bootstrap.css" %}">
+    
+    
+    <link rel="stylesheet" href="{% static 'blog/main.css' %}">
+   
+   
+    <!-- MDB icon -->
+    <link rel="icon" href="{% static "blog/img/mdb-favicon.ico" type="image/x-icon" %}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{% static "blog/css/bootstrap.min.css" %}">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="{% static "blog/css/mdb.min.css" %}">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="{% static "blog/css/style.css" %}">
+    {% csrf_token %}
+    
+    {% if title %}
+        <title>ILMbeats - {{title}}</title>
+    {% else %}
+        <title>ILMbeats</title>
+    {% endif %}
+   
+    {% include 'includes/stylesheets.html' %}
+    
+</head>
+<body>
+  <!-- Navbar -->
+
+  
+  <nav class="navbar navbar-expand-sm navbar-light white ">
+
+
+  <!-- Collapse button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
+    aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Collapsible content -->
+  <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+
+    <!-- Links -->
+    <ul class="navbar-nav mr-auto d-flex justify-content-start">
+          {% if user.is_authenticated %}
+                    <a href="{% url 'user-posts' user %}" class="btn text m-2"><i class="fas fa-user-shield"></i> My Post</a>
+                    <a href="{% url 'post-create' %} " class="btn text m-2"><i class="fas fa-user-edit"></i> Sell</a>
+                    <a href="{% url 'profile' %} " class="btn text m-2"><i class="fas fa-user"></i> {{ user.username }}</a>
+                    <a href="{% url 'logout' %} " class="btn text m-2"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+                    <li class="nav-item">
+
+            <a href="{% url 'order-summary'%}" class="nav-link waves-effect">
+              <span class="badge red z-depth-1 mr-1">  </span>
+              <i class="fas fa-shopping-cart"></i>
+              <span class="clearfix d-none d-sm-inline-block"> <strong>Cart</strong> </span>
+            </a>
+          </li>
+                    {% else %}
+                    <a href="{% url 'login' %} " class="btn text m-2 font-weight-bold" ><i class="fas fa-user-tie"></i> Log In</a>
+                   
+                    <a href="{% url 'register' %} " class="btn text m-2 font-weight-bold"> <i class="fas fa-sign-in-alt"></i> Sign Up</a>
+                   
+                   
+                    {% endif %}
+    
+
+      
+  
+   
+
+    </ul>
+    <!-- Links -->
+
+    <!-- Links -->
+    <ul class="navbar-nav nav-flex-icons ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#!">
+          <i class="fab fa-facebook-f" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#!">
+          <i class="fab fa-twitter" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#!">
+          <i class="fab fa-instagram" aria-hidden="true"></i>
+        </a>
+      </li>
+    </ul>
+    <!-- Links -->
+
+  </div>
+  <!-- Collapsible content -->
+
+</nav>
+<!-- First Navbar -->
+
+
+<!--imported navbar-->
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      
+      <a class="navbar-brand font-weight-bold" href="{% url 'blog-home' %}">ILMbeats</a>
+      <a href="{% url 'blog-home' %}" class="navbar-brand" href="#">Home</a>
+      
+    </div>
+     
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="navbar navbar-default">
+      
+      <!------{{ request.get_host }}/blog/search/-->
+      <form id="searchform" action="{% url 'search' %}" method="get" class="navbar-form navbar-left">
+        <div class="form-group">
+
+          <input type="text" class="form-control" name="q" type="text" value="{{ request.GET.q }}" placeholder="Search Here...">
+          
+        </div>
+        
+      </form>
+<button type="submit" onclick="searchform.submit()" class="btn-floating btn-primary"><i class="fa fa-search"></i></button>
+                
+
+     
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+  
+
+
+
+
+<div id="loading">
+    <div class="loader">
+        <div class="eq">
+            <span class="eq-bar eq-bar--1"></span>
+            <span class="eq-bar eq-bar--2"></span>
+            <span class="eq-bar eq-bar--3"></span>
+            <span class="eq-bar eq-bar--4"></span>
+            <span class="eq-bar eq-bar--5"></span>
+            <span class="eq-bar eq-bar--6"></span>
+        </div>
+        
+    </div>
+</div>
+<div id="wrapper" data-scrollable="true">
+   {% comment %}{% include 'includes/sidebar.html' %}
+    {% include 'includes/nav.html' %}
+   {% endcomment %} 
+    {% block content %}{% endblock %}
+</div>
+
+
+</div>
+
+
+
+
+ 
+    
+</body>
+</html>

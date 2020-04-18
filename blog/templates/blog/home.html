@@ -1,0 +1,209 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block content %}
+<hr>
+<!------{{ request.get_host }}/blog/search/-->
+      <form id="searchform" action="{% url 'search' %}" method="get" class="navbar-form navbar-left">
+        <div class="form-group">
+
+          <input type="text" class="form-control" name="q" type="text" value="{{ request.GET.q }}" placeholder="Search Here...">
+          
+        </div>
+        
+      </form>
+<button type="submit" onclick="searchform.submit()" class="btn-floating btn-primary"><i class="fa fa-search"></i></button>
+<div class="container">
+      <div class="container my-5 py-5 z-depth-1">
+
+ 
+    <!--Section: Content-->
+    <section class="px-md-5 mx-md-5 text-center text-lg-left dark-grey-text">
+
+      <!--Grid row-->
+      <div class="row">
+
+        <!--Grid column-->
+        <div class="col-md-6 mb-4 mb-md-0">
+
+          <!--Image-->
+          <div class="view overlay z-depth-1-half">
+            <img src="https://mdbootstrap.com/img/Photos/Others/img%20(16).jpg" class="img-fluid" alt="">
+            <a href="#">
+              <div class="mask rgba-white-light"></div>
+            </a>
+          </div>
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-6 mb-4 mb-md-0">
+
+          <h3 class="font-weight-bold">Integrated Life Music(ILM)</h3>
+
+          <p class="text-muted">At IlM we believe music is life, it from time to time feeds our souls , with that reason we share free contents for a dream experience with our services</p>
+
+          <a class="btn btn-brown btn-md ml-0" href="#" role="button">Travel<i class="fa fa-plane ml-2"></i></a>
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+
+    </section>
+    <!--Section: Content-->
+</div>
+<hr>
+
+    {% for post in posts %}
+<div class="jumbotron mt-2 bg-white shadow-lg">
+  <article class="media content-section shadow">
+              <a href="{{ post.author.profile.image.url }} " target="_blank"> <img src="{{ post.author.profile.image.url }}  " alt="" class="article-img rounded-circle img-thumbnail img-fluid shadow"></a>
+              
+    <div class="media-body">
+              <div class="article-metadata d-flex justify-content-between">
+                  <p class="lead">
+                      <span class="mr-1">mp3:${{post.price}}</span>
+                     
+                  </p>
+                  <a class="mr-2 " href="{% url 'user-posts' post.author.username  %}"><h3>{{ post.author }}</h3></a>
+                  <small class="text-muted">Uploaded-on: {{post.date_posted}}</small> 
+                  <small class="text-muted">Country: {{post.Your_country}}</small>
+              </div>
+
+            <audio preload='none' oncontextmenu="return false;" controls controlsList="nodownload">
+    <source src="{{ post.Signature_beat.url }}" type="audio/mpeg">
+</audio>  
+            {% if post.file %}          
+            <a href="{{ post.file.url }}"  download class="text-dark text-justify "><h5>{{ post.blog }}</h5></a>
+            {% endif %}
+             <h2><a class="article-title text-justify " href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+         <div class="d-flex justify-content-between">
+            <p class="article-content text-justify text-truncate overflow-hidden">{{ post.content }}</p>
+            {% if post.file %}
+         <div class="form-group mt-0 pt-0  m-2">          
+           
+            
+         </div>
+           {% endif %}
+     
+        <p class="lead">
+        <a  class="btn btn-outline-primary  btn-d" href="{{post.get_add_post_to_cart_url}}" role="button">Download</a>
+        
+         </p>  
+
+    </div>        
+  </article>        
+  <div class="accordion" id="accordionExample">         
+      <div id="accordianId" role="tablist" aria-multiselectable="true">
+        <div class="card">
+            <div class="card-header" role="tab" id="section1HeaderId">
+                <h5 class="mb-0">
+                    <a data-toggle="collapse" data-parent="#accordianId" href="#section1ContentId" aria-expanded="true" aria-controls="section1ContentId">Beat details</a>
+                </h5>
+            </div> 
+
+            <div id="section1ContentId" class="collapse in" role="tabpanel" aria-labelledby="section1HeaderId">
+                <div class="card" style="width: 18rem;">
+                 <div class="card-header">{{post.title}}</div>
+                      <ul class="list-group list-group-flush">
+                                  <li class="list-group-item">Uploaded:{{post.date_posted}}</li>
+                                  <li class="list-group-item">Made with:{{post.made_with}}</li>
+                                  <li class="list-group-item">Genre:{{post.category_choice}}</li>
+                                  <li class="list-group-item">Type:{{post.type_choice}}</li>
+                                  <li class="list-group-item">
+                     
+                        
+                 <div class="card" style="width: 18rem;">
+                  <div class="card-header">plugins</div>
+                         <ul class="list-group list-group-flush">
+                             <li class="list-group-item">{{post.plugins}}</li>
+                             
+                         </ul></li>
+                         </ul>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card"> 
+          <div class="card-header" role="tab" id="section2HeaderId">
+              <h5 class="mb-0">
+                    <a data-toggle="collapse" data-parent="#accordianId" href="#section2ContentId" aria-expanded="true" aria-controls="section2ContentId">Producer detail</a>
+              </h5>
+          </div>
+          <div id="section2ContentId" class="collapse in" role="tabpanel" aria-labelledby="section2HeaderId">
+             <div class="card" style="width: 18rem;">
+                
+               <div class="card-header"> {{post.author.username}}</div>
+        <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{post.author.profile.studio}}</li>
+                <li class="list-group-item">expirience: {{post.author.profile.experience}}</li>
+                <li class="list-group-item">joined: {{post.author.profile.joined_on}}</li>
+                <li class="list-group-item">Awards: {{post.author.profile.awards}}</li>
+                <li class="list-group-item">Country: {{post.author.profile.country}}</li>
+                <li class="list-group-item">
+                <div class="card" style="width: 18rem;">
+         <div class="card-header">Hits</div>
+        <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{post.author.profile.hit1}}</li>
+                <li class="list-group-item">{{post.author.profile.hit2}}</li>
+                <li class="list-group-item">{{post.author.profile.hit3}}</li>
+                
+                 </ul>
+               </div></li>
+              </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+               
+  
+  
+        
+  
+    
+        
+          
+      
+     
+     
+   
+    
+   
+
+
+            
+          <a href="{{post.get_add_post_to_cart_without_redirect_url}}" button type="button" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i>| to download list </a>
+           <a href="{{post.get_remove_post_from_cart_url}}" button type="button" class="btn btn-primary btn-sm"><i class="far fa-minus-square"></i> |from download list</a> 
+           
+      </div>   
+    {% endfor %}
+
+    
+    {% if is_paginated %}
+
+      {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+
+    {% endif %}
+{% endblock content %}
